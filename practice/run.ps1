@@ -27,5 +27,5 @@ if($LASTEXITCODE -ne 0)
 Write-Host "Start executing...";
 ls (".\data\{0}" -f $problemName) | ?{$_.PSIsContainer -eq $false} | %{
     Write-Host "Executing for $_";
-    gc $_.fullname | .\a.exe;
+    gc $_.fullname | %{Write-Host $_; $_ | .\a.exe};
 }
