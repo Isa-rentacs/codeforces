@@ -16,7 +16,7 @@ if(-not (Test-Path (".\{0}.cpp" -f $problemName))){
 }
 
 Write-Host "Compling...";
-[string]$command = ("g++ {0}.cpp" -f $problemName);
+[string]$command = ("g++ -std=c++0x {0}.cpp" -f $problemName);
 Invoke-Expression $command;
 
 if($LASTEXITCODE -ne 0)
