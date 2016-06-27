@@ -2,7 +2,9 @@ param
 (
     [Parameter(Mandatory)]
     [string]
-    $problemName
+    $problemName,
+
+    $isOneLinePerCase = $true
 )
 
 if(Test-Path $problemName)
@@ -27,5 +29,13 @@ if($LASTEXITCODE -ne 0)
 Write-Host "Start executing...";
 ls (".\data\{0}" -f $problemName) | ?{$_.PSIsContainer -eq $false} | %{
     Write-Host "Executing for $_";
-    gc $_.fullname | %{Write-Host $_; $_ | .\a.exe};
+    if($isOneLinePerCase)
+    {
+        gc $_.fullname | %{Write-Host $_; $_ | .\a.exe};
+    }
+    else
+    {
+        (gc $_.fullname | %{write-host $_});
+        gc $_.fullname | .\a.exe;
+    }
 }
